@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Electron</title>
+
+    <!-- Google Fonts: Quicksand -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- CSP: Content-Security-Policy -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self';
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data:;
+        connect-src 'self' https://uxdrmhptzpaiskqrnlwe.supabase.co;"
+    />
+
+  </head>
+
+  <body class="w-full h-screen">
+    <div class="w-full h-full" id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
