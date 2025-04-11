@@ -11,6 +11,7 @@ import './lib/i18n'
 import { LanguageSelector } from "./components/LanguageSelector";
 import logo from "./assets/logo3.png"
 import Header from "./components/Header";
+import { sbclient } from "./supabase-client";
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -20,6 +21,15 @@ function App(): JSX.Element {
   
   const { user, isLoading, signInWithGoogle } = useAuthStore();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    const x = async() => {
+      const resp = await sbclient.from('UserData').select('*')
+      console.log(resp.data, "xx")
+    }
+
+    x()
+  }, [])
   
   if(!user) {
     return (

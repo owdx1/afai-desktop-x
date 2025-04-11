@@ -15,10 +15,12 @@ model Request {
 }
 
 model UserData {
-  id      String  @id @default(uuid())
-  email   String  @unique
-  name    String?
-  age     Int?
-  phone   String?
-  address String?
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  age       Int?
+  phone     String?
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime
 }
