@@ -27,6 +27,7 @@
     "@radix-ui/react-select": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.0",
     "@supabase/supabase-js": "^2.49.4",
+    "buffer": "^6.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "docx": "^9.3.0",

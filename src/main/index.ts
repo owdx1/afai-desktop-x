@@ -3,6 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import * as dotenv from "dotenv"
+import { OpenAIService } from './services/OpenAIService'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -41,9 +42,34 @@ app.whenReady().then(() => {
 
   ipcMain.on('ping', () => console.log('pong'))
 
-  ipcMain.handle('pingx', async (_, args) => {
-    console.log("xy");
-  })
+  ipcMain.handle('process-file', async (_, args) => {
+    try {
+      const { fileData, userData } = args;
+      
+      const aiService = new OpenAIService("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");
+      
+      const processedBuffer = await aiService.processFileContent({
+        name: fileData.name,
+        type: fileData.type,
+        buffer: fileData.buffer,
+        clientMetadata: {
+          name: userData.name,
+          email: userData.email
+        }
+      });
+      
+      return {
+        success: true,
+        data: processedBuffer
+      };
+    } catch (error) {
+      console.error("Error in process-file handler:", error);
+      return {
+        success: false,
+        error: "Failed to process document"
+      };
+    }
+  });
 
   dotenv.config()
 

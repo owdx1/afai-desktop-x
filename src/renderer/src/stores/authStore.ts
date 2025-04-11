@@ -3,6 +3,7 @@ import { User } from "@supabase/supabase-js";
 import { create } from "zustand"
 
 interface AuthState {
+  
   user: User | null
   isLoading: boolean
   error: string | null
