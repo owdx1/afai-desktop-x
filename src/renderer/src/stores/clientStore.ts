@@ -2,8 +2,8 @@ import { UserData } from "@/lib/db-types"
 import { create } from "zustand"
 
 interface ClientState {
-  client_id: string | null
-  setClientId: (id: string) => void
+  client_email: string | null
+  setClientEmail: (id: string) => void
 
   userData: UserData | null
 
@@ -13,10 +13,10 @@ interface ClientState {
 
 export const useClientStore = create<ClientState>((set) => ({
   
-  client_id: null,
+  client_email: null,
   userData: null,
 
-  setClientId: (id) => set({ client_id: id }),
+  setClientEmail: (id) => set({ client_email: id }),
   setUserData: (ud) => set({ userData: ud })
 
 }))

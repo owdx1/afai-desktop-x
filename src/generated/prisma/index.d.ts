@@ -973,19 +973,19 @@ export namespace Prisma {
   export type RequestMinAggregateOutputType = {
     id: string | null
     afai_id: string | null
-    client_id: string | null
+    client_email: string | null
   }
 
   export type RequestMaxAggregateOutputType = {
     id: string | null
     afai_id: string | null
-    client_id: string | null
+    client_email: string | null
   }
 
   export type RequestCountAggregateOutputType = {
     id: number
     afai_id: number
-    client_id: number
+    client_email: number
     _all: number
   }
 
@@ -993,19 +993,19 @@ export namespace Prisma {
   export type RequestMinAggregateInputType = {
     id?: true
     afai_id?: true
-    client_id?: true
+    client_email?: true
   }
 
   export type RequestMaxAggregateInputType = {
     id?: true
     afai_id?: true
-    client_id?: true
+    client_email?: true
   }
 
   export type RequestCountAggregateInputType = {
     id?: true
     afai_id?: true
-    client_id?: true
+    client_email?: true
     _all?: true
   }
 
@@ -1084,7 +1084,7 @@ export namespace Prisma {
   export type RequestGroupByOutputType = {
     id: string
     afai_id: string
-    client_id: string
+    client_email: string
     _count: RequestCountAggregateOutputType | null
     _min: RequestMinAggregateOutputType | null
     _max: RequestMaxAggregateOutputType | null
@@ -1107,28 +1107,28 @@ export namespace Prisma {
   export type RequestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     afai_id?: boolean
-    client_id?: boolean
+    client_email?: boolean
   }, ExtArgs["result"]["request"]>
 
   export type RequestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     afai_id?: boolean
-    client_id?: boolean
+    client_email?: boolean
   }, ExtArgs["result"]["request"]>
 
   export type RequestSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     afai_id?: boolean
-    client_id?: boolean
+    client_email?: boolean
   }, ExtArgs["result"]["request"]>
 
   export type RequestSelectScalar = {
     id?: boolean
     afai_id?: boolean
-    client_id?: boolean
+    client_email?: boolean
   }
 
-  export type RequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "afai_id" | "client_id", ExtArgs["result"]["request"]>
+  export type RequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "afai_id" | "client_email", ExtArgs["result"]["request"]>
 
   export type $RequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Request"
@@ -1136,7 +1136,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       afai_id: string
-      client_id: string
+      client_email: string
     }, ExtArgs["result"]["request"]>
     composites: {}
   }
@@ -1562,7 +1562,7 @@ export namespace Prisma {
   interface RequestFieldRefs {
     readonly id: FieldRef<"Request", 'String'>
     readonly afai_id: FieldRef<"Request", 'String'>
-    readonly client_id: FieldRef<"Request", 'String'>
+    readonly client_email: FieldRef<"Request", 'String'>
   }
     
 
@@ -3014,7 +3014,7 @@ export namespace Prisma {
   export const RequestScalarFieldEnum: {
     id: 'id',
     afai_id: 'afai_id',
-    client_id: 'client_id'
+    client_email: 'client_email'
   };
 
   export type RequestScalarFieldEnum = (typeof RequestScalarFieldEnum)[keyof typeof RequestScalarFieldEnum]
@@ -3128,13 +3128,13 @@ export namespace Prisma {
     NOT?: RequestWhereInput | RequestWhereInput[]
     id?: StringFilter<"Request"> | string
     afai_id?: StringFilter<"Request"> | string
-    client_id?: StringFilter<"Request"> | string
+    client_email?: StringFilter<"Request"> | string
   }
 
   export type RequestOrderByWithRelationInput = {
     id?: SortOrder
     afai_id?: SortOrder
-    client_id?: SortOrder
+    client_email?: SortOrder
   }
 
   export type RequestWhereUniqueInput = Prisma.AtLeast<{
@@ -3143,13 +3143,13 @@ export namespace Prisma {
     OR?: RequestWhereInput[]
     NOT?: RequestWhereInput | RequestWhereInput[]
     afai_id?: StringFilter<"Request"> | string
-    client_id?: StringFilter<"Request"> | string
+    client_email?: StringFilter<"Request"> | string
   }, "id">
 
   export type RequestOrderByWithAggregationInput = {
     id?: SortOrder
     afai_id?: SortOrder
-    client_id?: SortOrder
+    client_email?: SortOrder
     _count?: RequestCountOrderByAggregateInput
     _max?: RequestMaxOrderByAggregateInput
     _min?: RequestMinOrderByAggregateInput
@@ -3161,7 +3161,7 @@ export namespace Prisma {
     NOT?: RequestScalarWhereWithAggregatesInput | RequestScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Request"> | string
     afai_id?: StringWithAggregatesFilter<"Request"> | string
-    client_id?: StringWithAggregatesFilter<"Request"> | string
+    client_email?: StringWithAggregatesFilter<"Request"> | string
   }
 
   export type UserDataWhereInput = {
@@ -3236,43 +3236,43 @@ export namespace Prisma {
   export type RequestCreateInput = {
     id: string
     afai_id: string
-    client_id: string
+    client_email: string
   }
 
   export type RequestUncheckedCreateInput = {
     id: string
     afai_id: string
-    client_id: string
+    client_email: string
   }
 
   export type RequestUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     afai_id?: StringFieldUpdateOperationsInput | string
-    client_id?: StringFieldUpdateOperationsInput | string
+    client_email?: StringFieldUpdateOperationsInput | string
   }
 
   export type RequestUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     afai_id?: StringFieldUpdateOperationsInput | string
-    client_id?: StringFieldUpdateOperationsInput | string
+    client_email?: StringFieldUpdateOperationsInput | string
   }
 
   export type RequestCreateManyInput = {
     id: string
     afai_id: string
-    client_id: string
+    client_email: string
   }
 
   export type RequestUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     afai_id?: StringFieldUpdateOperationsInput | string
-    client_id?: StringFieldUpdateOperationsInput | string
+    client_email?: StringFieldUpdateOperationsInput | string
   }
 
   export type RequestUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     afai_id?: StringFieldUpdateOperationsInput | string
-    client_id?: StringFieldUpdateOperationsInput | string
+    client_email?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserDataCreateInput = {
@@ -3283,7 +3283,7 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserDataUncheckedCreateInput = {
@@ -3294,7 +3294,7 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserDataUpdateInput = {
@@ -3327,7 +3327,7 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserDataUpdateManyMutationInput = {
@@ -3370,19 +3370,19 @@ export namespace Prisma {
   export type RequestCountOrderByAggregateInput = {
     id?: SortOrder
     afai_id?: SortOrder
-    client_id?: SortOrder
+    client_email?: SortOrder
   }
 
   export type RequestMaxOrderByAggregateInput = {
     id?: SortOrder
     afai_id?: SortOrder
-    client_id?: SortOrder
+    client_email?: SortOrder
   }
 
   export type RequestMinOrderByAggregateInput = {
     id?: SortOrder
     afai_id?: SortOrder
-    client_id?: SortOrder
+    client_email?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
