@@ -9,7 +9,7 @@ import { UserData } from "../lib/db-types";
 
 const QRInput = () => {
   const { user } = useAuthStore();
-  const { client_id, setClientId, userData, setUserData } = useClientStore();
+  const { client_email, setClientEmail, userData, setUserData } = useClientStore();
   const [qrUrl, setQrUrl] = useState("");
 
   useEffect(() => {
@@ -31,11 +31,11 @@ const QRInput = () => {
       filter: `afai_id=eq.${user.id}`
     }, async (payload) => {
       console.log("Received payload");
-      if(payload.new && payload.new.client_id) {
-        const clientId = payload.new.client_id
-        setClientId(clientId)
+      if(payload.new && payload.new.client_email) {
+        const client_email = payload.new.client_email
+        setClientEmail(client_email)
 
-        const { data, error } = await sbclient.from('UserData').select('*').eq('id', clientId).single()
+        const { data, error } = await sbclient.from('UserData').select('*').eq('email', client_email).single()
         if(!error) {
           setUserData(data as UserData)
         }
@@ -48,7 +48,7 @@ const QRInput = () => {
     }
   }, [])
 
-  if(client_id && !userData) {
+  if(client_email && !userData) {
     return <Card>
       <CardContent>
         <Loader2Icon /> <p> Request reached, fetching user data...</p>
