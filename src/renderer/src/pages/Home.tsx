@@ -5,12 +5,13 @@ import { useClientStore } from "../stores/clientStore";
 import { Button } from "../components/ui/button";
 import { useState } from "react";
 import { Buffer } from "buffer";
-
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { file, setResultBlob, setError } = useDocumentStore();
   const { userData } = useClientStore();
   const [isProcessing, setIsProcessing] = useState(false);
+  const navigate = useNavigate();
 
   const sendAI = async () => {
     if (!file || !userData) {
@@ -20,45 +21,41 @@ const Home = () => {
 
     setIsProcessing(true);
     setError(null);
-    
-    try {
 
+    try {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
-      
+
       const fileData = {
         name: file.name,
         type: file.type,
         buffer: buffer
       };
-      
+
       const result = await window.electron.ipcRenderer.invoke('process-file', {
         fileData,
-        userData
+        userData,
+        useModel: "openai" // Add a parameter to specify which model to use
       });
-      
+
       if (!result.success) {
         throw new Error(result.error);
       }
-      
-      const resultBlob = new Blob([result.data], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-      
+
+      // Set the appropriate MIME type based on file type
+      const outputMimeType = file.type.includes('pdf') || file.name.toLowerCase().endsWith('.pdf')
+        ? 'application/pdf'
+        : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+
+      const resultBlob = new Blob([result.data], { type: outputMimeType });
+
       setResultBlob(resultBlob);
-      
-      const url = URL.createObjectURL(resultBlob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = "processed-document.docx";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      
-      return resultBlob;
+
+      // Instead of downloading, navigate to the processed document page
+      navigate('/processed-document');
     } catch (error) {
-      console.error("Error sending to AI:", error);
-      setError("Failed to process document");
-      return null;
+      console.error(error);
+      setError(error instanceof Error ? error.message : 'Failed to process document');
     } finally {
       setIsProcessing(false);
     }
@@ -70,14 +67,14 @@ const Home = () => {
         <QRInput />
         <DocumentInput />
       </div>
-      
+
       {file && userData && (
-        <Button 
+        <Button
           className="w-1/2"
           onClick={sendAI}
           disabled={isProcessing}
         >
-          {isProcessing ? "Processing..." : "All Set, Send to AFAI 🚀"}
+          {isProcessing ? "Processing..." : "All Set, Send to OpenAI 🚀"}
         </Button>
       )}
     </div>

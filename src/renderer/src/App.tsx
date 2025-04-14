@@ -1,11 +1,12 @@
 import { Button } from "./components/ui/button"
-import { Route, BrowserRouter as Router, Routes } from "react-router"
+import { Route, HashRouter as Router, Routes } from "react-router-dom"
 import Home from "./pages/Home"
 import { useEffect } from "react";
 import { initializeAuthListener, useAuthStore } from "./stores/authStore";
 import { Loader2Icon } from "lucide-react";
 import { cn } from "./lib/utils";
 import Profile from "./pages/Profile";
+import ProcessedDocument from "./pages/ProcessedDocument";
 import { useTranslation } from "react-i18next";
 import './lib/i18n'
 import { LanguageSelector } from "./components/LanguageSelector";
@@ -67,6 +68,7 @@ function App(): JSX.Element {
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/profile" element={<Profile />} />
+          <Route path="/processed-document" element={<ProcessedDocument />} />
         </Routes>
       </Router>
     </div>
