@@ -12,12 +12,7 @@ import './lib/i18n'
 import { LanguageSelector } from "./components/LanguageSelector";
 import logo from "./assets/logo3.png"
 import Header from "./components/Header";
-<<<<<<< HEAD
-
-=======
-import { sbclient } from "./supabase-client";
 import DisplayDocumentDialog from "./components/dialogs/DisplayDocumentDialog";
->>>>>>> 68aad3dde77b89f1f94f03c3142d0a1d071f4bf8
 
 function App(): JSX.Element {
   useEffect(() => {

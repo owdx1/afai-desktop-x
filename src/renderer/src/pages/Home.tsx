@@ -10,8 +10,8 @@ import { OctagonAlertIcon } from "lucide-react";
 import { cn } from "../lib/utils";
 
 const Home = () => {
-  const { file, setResultBlob, setError, resultBlob } = useDocumentStore();
-  const { userData } = useClientStore();
+  const { file, setFile, setResultBlob, setError, resultBlob, restartDocument } = useDocumentStore();
+  const { userData, restartClient } = useClientStore();
   const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
 
@@ -87,11 +87,19 @@ const Home = () => {
 
       
       {resultBlob && 
-        <Link to={"/processed-document"} className="cursor-pointer px-8 py-2 rounded flex items-center justify-center gap-4 bg-red-50">
-          <OctagonAlertIcon color="red"/>
-          <span>Validate - {file?.name}</span>
-        </Link>
+        <>
+          <Link to={"/processed-document"} className="cursor-pointer px-8 py-2 rounded flex items-center justify-center gap-4 bg-red-50">
+            <OctagonAlertIcon color="red"/>
+            <span>Validate - {file?.name}</span>
+          </Link>
+
+          <Button onClick={() => {
+            restartDocument()
+            restartClient()
+          }}> Restart </Button>
+        </>
       }
+
     </div>
   );
 };

@@ -1,16 +1,17 @@
 import { useAuthStore } from "../stores/authStore";
 import { useClientStore } from "../stores/clientStore";
-import { CheckCircle, Loader2Icon, QrCode } from "lucide-react";
+import { CheckCircle, Loader2Icon, MailOpen, MailXIcon, PersonStandingIcon, QrCode } from "lucide-react";
 import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { sbclient } from "../supabase-client";
 import { UserData } from "../lib/db-types";
+import { Button } from "./ui/button";
 
 const QRInput = () => {
 
   const { user } = useAuthStore();
-  const { client_email, setClientEmail, userData, setUserData } = useClientStore();
+  const { client_email, setClientEmail, userData, setUserData, restartClient } = useClientStore();
   const [qrUrl, setQrUrl] = useState("");
 
   useEffect(() => {
@@ -49,31 +50,6 @@ const QRInput = () => {
     }
   }, [])
 
-  if(client_email && !userData) {
-    return <Card>
-      <CardContent>
-        <Loader2Icon /> <p> Request reached, fetching user data...</p>
-      </CardContent>
-    </Card>
-  }
-
-  if (userData) {
-    return (
-      <Card className="w-80 h-96">
-        <CardHeader className="pb-2">
-          <CardTitle className="flex items-center">
-            <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
-            QR Code Scanned
-          </CardTitle>
-          <CardDescription>Client successfully verified</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-gray-500">{userData.email} - {userData.name}</p>
-        </CardContent>
-      </Card>
-    );
-  }
-
   return (
     <Card className="w-80 h-96">
       <CardHeader className="pb-2">
@@ -83,15 +59,57 @@ const QRInput = () => {
         </CardTitle>
         <CardDescription>Verify your identity to continue</CardDescription>
       </CardHeader>
-      <CardContent>
-        {qrUrl && (
-          <div className="flex flex-col items-center space-y-2 p-4">
-            <QRCode value={qrUrl} size={180} />
-            <p className="text-xs text-gray-500 mt-2">
-              Scan with your mobile device
-            </p>
-          </div>
-        )}
+      <CardContent className="w-full h-full">
+        <div className="flex flex-col items-center gap-2 w-full h-full">
+          {
+            client_email && !userData &&
+            
+            <div className="flex items-center justify-center gap-4"> 
+              <Loader2Icon className="animate-spin" color="yellow"/>
+              <span> Fetching user data ... </span>
+            </div>
+          }
+          {
+            client_email && userData && 
+            <div className="flex flex-col w-full h-full shadow-sm">
+              <div className="flex items-center gap-2 text-green-600 text-sm mb-4">
+                <CheckCircle className="w-5 h-5" />
+                <span>This section is done!</span>
+              </div>
+
+              <div className="flex flex-col gap-3 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <MailOpen className="w-4 h-4" />
+                  <span className="truncate">{client_email}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <PersonStandingIcon className="w-4 h-4" />
+                  <span className="font-medium text-foreground">{userData.name}</span>
+                </div>
+              </div>
+
+              <div className="flex-1" />
+
+              <Button 
+                variant="destructive" 
+                onClick={restartClient}
+                className="mt-6 w-full max-w-sm self-center"
+              >
+                This is not me
+              </Button>
+            </div>
+
+          }
+
+          {qrUrl && !userData && (
+            <div className="flex flex-col items-center space-y-2 p-4">
+              <QRCode value={qrUrl} size={180} />
+              <p className="text-xs text-gray-500 mt-2">
+                Scan with your mobile device
+              </p>
+            </div>
+          )}
+        </div>
       </CardContent>
     </Card>
   );

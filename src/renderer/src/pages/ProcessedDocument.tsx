@@ -4,9 +4,10 @@ import { Button } from '../components/ui/button';
 import { FileIcon, FolderOpenIcon, ExternalLinkIcon, ChevronLeftIcon, AlertCircleIcon, PrinterIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '../components/ui/card';
+import DisplayResultBlobDialog from '../components/dialogs/DisplayResultBlob';
 
 const ProcessedDocument = () => {
-  const { resultBlob, setResultBlob, setFile } = useDocumentStore();
+  const { resultBlob, setResultBlob, setFile, displayResultBlob, setDisplayResultBlob } = useDocumentStore();
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [filePath, setFilePath] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -15,9 +16,10 @@ const ProcessedDocument = () => {
   const [printResult, setPrintResult] = useState<{success: boolean; message?: string; error?: string} | null>(null);
   const navigate = useNavigate();
   
+
+
   useEffect(() => {
     if (!resultBlob) {
-      // Redirect back to home if no result blob is available
       navigate('/');
       return;
     }
@@ -162,13 +164,12 @@ const ProcessedDocument = () => {
   }
   
   return (
-    <div className="container mx-auto p-4 flex flex-col h-[calc(100vh-100px)]">
+    <div className="h-full p-4 flex flex-col w-full">
       <div className="flex justify-between items-center mb-4">
         <Button variant="outline" onClick={goBack}>
           <ChevronLeftIcon className="mr-2 h-4 w-4" />
           Back
         </Button>
-        <h1 className="text-2xl font-bold">Processed Document</h1>
         <div className="flex gap-2">
           <Button variant="outline" onClick={openInPdfViewer}>
             <ExternalLinkIcon className="mr-2 h-4 w-4" />
@@ -184,92 +185,24 @@ const ProcessedDocument = () => {
           </Button>
         </div>
       </div>
-      
-      <div className="flex-1 border rounded-md overflow-hidden bg-white p-4 flex flex-col items-center justify-center">
-        <Card className="w-full max-w-3xl">
-          <CardContent className="p-8 flex flex-col items-center">
-            <FileIcon className="h-16 w-16 text-muted-foreground mb-4" />
-            <p className="text-xl font-bold"></p>
-            <p className="text-center mb-6">
-              Your document has been processed successfully and is ready to view.
-            </p>
-            <div className="flex gap-4 mb-4">
-              <Button onClick={openInPdfViewer}>Open in PDF Viewer</Button>
-              <Button variant="outline" onClick={openInDefaultApp}>Open in Default App</Button>
-            </div>
-            
-            {/* Print Button */}
-            <div className="mt-6 border-t pt-6 w-full flex flex-col items-center">
-              <Button 
-                className="w-64 flex items-center justify-center gap-2"
-                onClick={printPdfFile}
-                disabled={isPrinting || !filePath}
-              >
-                {isPrinting ? (
-                  <>
-                    <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Printing...
-                  </>
-                ) : (
-                  <>
-                    <PrinterIcon className="h-5 w-5" />
-                    Print the File
-                  </>
-                )}
-              </Button>
-              
-              {printResult && printResult.success && (
-                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-md w-full max-w-md">
-                  <div className="flex items-center gap-3">
-                    <div className="flex-shrink-0 bg-green-100 rounded-full p-2">
-                      <svg className="h-5 w-5 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-green-800">
-                        Document sent to printer successfully
-                      </p>
-                      <p className="text-sm text-green-600 mt-1">
-                        You can now start over with a new client and document
-                      </p>
-                    </div>
-                  </div>
-                  
-                  {/* Go back to main menu button with more prominence */}
-                  <Button 
-                    className="w-full mt-4 flex items-center justify-center gap-2"
-                    onClick={goBackAndRefresh}
-                  >
-                    <ChevronLeftIcon className="h-5 w-5" />
-                    Go Back to Main Menu & Reset
-                  </Button>
-                </div>
-              )}
-              
-              {printResult && !printResult.success && (
-                <p className="mt-2 text-sm text-red-500">
-                  {printResult.error}
-                </p>
-              )}
-              
-              {/* Only show this button if not yet printed or print failed */}
-              {(!printResult || !printResult.success) && (
-                <Button 
-                  className="w-64 mt-6 flex items-center justify-center gap-2"
-                  variant="outline"
-                  onClick={goBackAndRefresh}
-                >
-                  <ChevronLeftIcon className="h-5 w-5" />
-                  Go Back to Main Menu & Reset
-                </Button>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+
+      <div className='w-full md:max-w-7xl mx-auto bg-fuchsia-300'>
+        <DisplayResultBlobDialog />
       </div>
+      
+
+        
     </div>
   );
 };
 
 export default ProcessedDocument; 
+
+
+
+
+
+
+
+
+

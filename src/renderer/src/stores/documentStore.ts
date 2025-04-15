@@ -5,7 +5,10 @@ interface DocumentState {
 
   displayFile: boolean
   setDisplayFile: (b: boolean) => void
-  
+
+  displayResultBlob: boolean
+  setDisplayResultBlob: (b: boolean) => void
+
   resultBlob: Blob | null
   error: string | null
 
@@ -13,11 +16,24 @@ interface DocumentState {
   setResultBlob: (resultBlob: Blob | null) => void
   setError: (error: string | null) => void
 
+  restartDocument: () => void
+
 }
 
 export const useDocumentStore = create<DocumentState>((set) => ({
+    restartDocument() {
+        set({
+            file: null,
+            resultBlob: null,
+            error: null
+        })
+    },
   file: null,
   displayFile: false,
+  displayResultBlob: false,
+  setDisplayResultBlob(b) {
+      set({ displayFile: b })
+  },
   setDisplayFile(b) {
       set({ displayFile: b })
   },

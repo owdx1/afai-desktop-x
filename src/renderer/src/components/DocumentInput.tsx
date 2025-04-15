@@ -1,9 +1,9 @@
 import { ChangeEvent, useState, useEffect } from 'react'
 import { Input } from './ui/input'
 import { useDocumentStore } from '../stores/documentStore'
-import { CheckCircle, FileIcon, ScanIcon, ExternalLinkIcon, EyeIcon } from 'lucide-react'
+import { CheckCircle, FileIcon, ScanIcon, ExternalLinkIcon, EyeIcon, PrinterCheckIcon } from 'lucide-react'
 import { Button } from './ui/button'
-import { Card, CardContent } from './ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card'
 import {
   Dialog,
   DialogContent,
@@ -191,44 +191,63 @@ const DocumentInput = () => {
 
   return (
     <>
-    <Card className='w-80 h-96'>
-      <CardContent className='w-full h-full'>
-        {file ?
-          <div className='flex flex-col items-center gap-2 w-full h-full'>
-            <div className='flex items-center gap-2 pb-4'>
-              <CheckCircle />
-              <p>This section is done!</p>
+      <Card className='w-80 h-96 groyp'>
+        <CardHeader className="pb-2">
+          <CardTitle className="flex items-center">
+            <ScanIcon className="h-5 w-5 mr-2" />
+            Scan Your File
+          </CardTitle>
+          <CardDescription>Scan or select a file to continue</CardDescription>
+        </CardHeader>
+        <CardContent className='w-full h-full'>
+          {file ?
+            <div className="flex flex-col justify-between w-full h-full">
+            <div className="flex items-center gap-2 text-sm text-green-600">
+              <CheckCircle className="w-5 h-5" />
+              <span>This section is done!</span>
             </div>
-            <Button variant="outline" onClick={() => setDisplayFile(true)}>
-              <FileIcon />
-              <p>{file.name}</p>
-            </Button>
-            <div className='flex-1'></div>
-            <Button onClick={() => {
-              setFile(null)
-              setError(null)
-            }}> Choose another file </Button>
-          </div>
-          :
-          <div className='flex flex-col items-center gap-4 w-full h-full p-4'>
-            <Input type='file' onChange={handleFileChange} />
-            <div className='flex-1'></div>
+          
             <Button 
-              className='w-full flex items-center gap-2' 
-              onClick={handleScanFile}
-              disabled={isScanning}
+              onClick={() => setDisplayFile(true)} 
+              className="mt-4 w-full max-w-sm justify-start gap-2 border-dashed border bg-white text-black hover:bg-gray-100"
             >
-              <ScanIcon size={18} />
-              {isScanning ? 'Scanning...' : 'Scan File'}
+              <FileIcon className="w-5 h-5" />
+              <span className="truncate">{file.name}</span>
             </Button>
-            {error && <p className="text-red-500 text-sm">{error}</p>}
-            {successMessage && <p className="text-green-500 text-sm">{successMessage}</p>}
+          
+            <div className="flex-1" />
+          
+            <Button 
+              variant="destructive" 
+              onClick={() => {
+                setFile(null)
+                setError(null)
+              }} 
+              className="w-full max-w-sm mt-6"
+            >
+              Choose another file
+            </Button>
           </div>
-        }
-      </CardContent>
+          
+            :
+            <div className='flex flex-col items-center gap-4 w-full h-full p-4'>
+              <Input type='file' onChange={handleFileChange} />
+              <div className='flex-1'></div>
+              <Button 
+                className='w-full flex items-center gap-2' 
+                onClick={handleScanFile}
+                disabled={isScanning}
+              >
+                <ScanIcon size={18} />
+                {isScanning ? 'Scanning...' : 'Scan File'}
+              </Button>
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+              {successMessage && <p className="text-green-500 text-sm">{successMessage}</p>}
+            </div>
+          }
+        </CardContent>
       </Card>
       
-      {/* Scan Location Popup */}
       <Dialog open={showScanPopup} onOpenChange={setShowScanPopup}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -238,7 +257,6 @@ const DocumentInput = () => {
             </DialogDescription>
           </DialogHeader>
           
-          {/* PDF/Image Viewer */}
           <div className="w-full h-[400px] overflow-hidden rounded-md border bg-muted flex items-center justify-center">
             {fileDataUrl ? (
               fileMimeType === 'application/pdf' ? (

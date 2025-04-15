@@ -9,6 +9,8 @@ interface ClientState {
 
   setUserData: (ud: UserData) => void
 
+  restartClient: () => void
+
 }
 
 export const useClientStore = create<ClientState>((set) => ({
@@ -17,6 +19,12 @@ export const useClientStore = create<ClientState>((set) => ({
   userData: null,
 
   setClientEmail: (id) => set({ client_email: id }),
-  setUserData: (ud) => set({ userData: ud })
+  setUserData: (ud) => set({ userData: ud }),
+
+  restartClient() {
+      set({ client_email: null, userData: null })
+  },
+
+
 
 }))
