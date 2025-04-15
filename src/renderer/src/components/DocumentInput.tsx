@@ -1,7 +1,7 @@
 import { ChangeEvent, useState, useEffect } from 'react'
 import { Input } from './ui/input'
 import { useDocumentStore } from '../stores/documentStore'
-import { CheckCircle, FileIcon, ScanIcon, ExternalLinkIcon } from 'lucide-react'
+import { CheckCircle, FileIcon, ScanIcon, ExternalLinkIcon, EyeIcon } from 'lucide-react'
 import { Button } from './ui/button'
 import { Card, CardContent } from './ui/card'
 import {
@@ -15,8 +15,7 @@ import {
 } from './ui/dialog'
 
 const DocumentInput = () => {
-
-  const { file, setFile, error, setError } = useDocumentStore()
+  const { file, setFile, error, setError, displayFile, setDisplayFile } = useDocumentStore()
   const [isScanning, setIsScanning] = useState(false)
   const [showScanPopup, setShowScanPopup] = useState(false)
   const [scanFilePath, setScanFilePath] = useState('')
@@ -24,15 +23,12 @@ const DocumentInput = () => {
   const [fileMimeType, setFileMimeType] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
 
-  // File path helper
   const getFileName = (filePath: string) => {
     if (!filePath) return '';
-    // Get the last part of the path (the filename)
     const parts = filePath.split(/[\/\\]/);
     return parts[parts.length - 1];
   };
 
-  // Load file data URL when scan file path changes
   useEffect(() => {
     const loadFileDataUrl = async () => {
       if (scanFilePath) {
@@ -50,7 +46,6 @@ const DocumentInput = () => {
     
     loadFileDataUrl();
   }, [scanFilePath]);
-
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files ? e.target.files[0] : null
@@ -74,11 +69,10 @@ const DocumentInput = () => {
     try {
       setIsScanning(true)
       setError(null)
-      setFileDataUrl('') // Reset file data URL before scanning
+      setFileDataUrl('')
       
       const result = await window.electron.ipcRenderer.invoke('scan-document');
       
-      // If we have a file path, show it regardless of success status
       if (result.filePath) {
         setScanFilePath(result.filePath);
         
@@ -200,15 +194,15 @@ const DocumentInput = () => {
     <Card className='w-80 h-96'>
       <CardContent className='w-full h-full'>
         {file ?
-          <div className='flex flex-col items-center gap-2 w-full h-full bg'>
+          <div className='flex flex-col items-center gap-2 w-full h-full'>
             <div className='flex items-center gap-2 pb-4'>
               <CheckCircle />
               <p>This section is done!</p>
             </div>
-            <div className='flex flex-col items-center gap-2'>
+            <Button variant="outline" onClick={() => setDisplayFile(true)}>
               <FileIcon />
               <p>{file.name}</p>
-            </div>
+            </Button>
             <div className='flex-1'></div>
             <Button onClick={() => {
               setFile(null)
@@ -216,20 +210,20 @@ const DocumentInput = () => {
             }}> Choose another file </Button>
           </div>
           :
-            <div className='flex flex-col items-center gap-4 w-full h-full p-4'>
-          <Input type='file' onChange={handleFileChange}/>
-              <div className='flex-1'></div>
-              <Button 
-                className='w-full flex items-center gap-2' 
-                onClick={handleScanFile}
-                disabled={isScanning}
-              >
-                <ScanIcon size={18} />
-                {isScanning ? 'Scanning...' : 'Scan File'}
-              </Button>
-              {error && <p className="text-red-500 text-sm">{error}</p>}
-              {successMessage && <p className="text-green-500 text-sm">{successMessage}</p>}
-            </div>
+          <div className='flex flex-col items-center gap-4 w-full h-full p-4'>
+            <Input type='file' onChange={handleFileChange} />
+            <div className='flex-1'></div>
+            <Button 
+              className='w-full flex items-center gap-2' 
+              onClick={handleScanFile}
+              disabled={isScanning}
+            >
+              <ScanIcon size={18} />
+              {isScanning ? 'Scanning...' : 'Scan File'}
+            </Button>
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {successMessage && <p className="text-green-500 text-sm">{successMessage}</p>}
+          </div>
         }
       </CardContent>
       </Card>

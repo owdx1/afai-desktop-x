@@ -10,8 +10,7 @@ import { UserData } from "../lib/db-types";
 const QRInput = () => {
 
   const { user } = useAuthStore();
-  const { client_id, setClientId, userData, setUserData } = useClientStore();
-  
+  const { client_email, setClientEmail, userData, setUserData } = useClientStore();
   const [qrUrl, setQrUrl] = useState("");
 
   useEffect(() => {
@@ -32,12 +31,12 @@ const QRInput = () => {
       table: 'Request',
       filter: `afai_id=eq.${user.id}`
     }, async (payload) => {
-      console.log("Received payload", payload);
-      if(payload.new && payload.new.client_id) {
-        const clientId = payload.new.client_id
-        setClientId(clientId)
+      console.log("Received payload");
+      if(payload.new && payload.new.client_email) {
+        const client_email = payload.new.client_email
+        setClientEmail(client_email)
 
-        const { data, error } = await sbclient.from('UserData').select('*').eq('id', clientId).single()
+        const { data, error } = await sbclient.from('UserData').select('*').eq('email', client_email).single()
         if(!error) {
           setUserData(data as UserData)
         }
@@ -50,7 +49,7 @@ const QRInput = () => {
     }
   }, [])
 
-  if(client_id && !userData) {
+  if(client_email && !userData) {
     return <Card>
       <CardContent>
         <Loader2Icon /> <p> Request reached, fetching user data...</p>
@@ -60,7 +59,7 @@ const QRInput = () => {
 
   if (userData) {
     return (
-      <Card className="w-80">
+      <Card className="w-80 h-96">
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center">
             <CheckCircle className="h-5 w-5 text-green-500 mr-2" />

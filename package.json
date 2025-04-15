@@ -49,6 +49,7 @@
     "pdfkit": "^0.16.0",
     "prisma": "^6.6.0",
     "react-i18next": "^15.4.1",
+    "react-pdf": "^9.2.1",
     "react-qr-code": "^2.0.15",
     "react-router": "^7.5.0",
     "react-router-dom": "^7.5.0",

@@ -189,7 +189,7 @@ const ProcessedDocument = () => {
         <Card className="w-full max-w-3xl">
           <CardContent className="p-8 flex flex-col items-center">
             <FileIcon className="h-16 w-16 text-muted-foreground mb-4" />
-            <p className="text-xl font-bold">Document Ready</p>
+            <p className="text-xl font-bold"></p>
             <p className="text-center mb-6">
               Your document has been processed successfully and is ready to view.
             </p>

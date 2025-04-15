@@ -5,10 +5,12 @@ import { useClientStore } from "../stores/clientStore";
 import { Button } from "../components/ui/button";
 import { useState } from "react";
 import { Buffer } from "buffer";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { OctagonAlertIcon } from "lucide-react";
+import { cn } from "../lib/utils";
 
 const Home = () => {
-  const { file, setResultBlob, setError } = useDocumentStore();
+  const { file, setResultBlob, setError, resultBlob } = useDocumentStore();
   const { userData } = useClientStore();
   const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
@@ -63,12 +65,16 @@ const Home = () => {
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center gap-12 py-12">
-      <div className="w-full h-full flex items-center justify-center gap-12">
-        <QRInput />
-        <DocumentInput />
-      </div>
+      <div className={cn({
+        "w-full h-full flex flex-col items-center justify-center gap-12": true,
+        "disabled opacity-50 pointer-events-none": resultBlob !== null
+      })}>
+        <div className="flex items-center justify-center gap-12 w-full h-full">
+          <QRInput />
+          <DocumentInput />
+        </div>
 
-      {file && userData && (
+        {file && userData && (
         <Button
           className="w-1/2"
           onClick={sendAI}
@@ -77,6 +83,15 @@ const Home = () => {
           {isProcessing ? "Processing..." : "All Set, Send to OpenAI 🚀"}
         </Button>
       )}
+      </div>
+
+      
+      {resultBlob && 
+        <Link to={"/processed-document"} className="cursor-pointer px-8 py-2 rounded flex items-center justify-center gap-4 bg-red-50">
+          <OctagonAlertIcon color="red"/>
+          <span>Validate - {file?.name}</span>
+        </Link>
+      }
     </div>
   );
 };

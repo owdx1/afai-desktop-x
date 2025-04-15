@@ -9,9 +9,9 @@ datasource db {
 }
 
 model Request {
-  id        String @id
-  afai_id   String
-  client_id String
+  id           String @id
+  afai_id      String
+  client_email String
 }
 
 model UserData {
@@ -22,5 +22,5 @@ model UserData {
   phone     String?
   address   String?
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @default(now())
 }
