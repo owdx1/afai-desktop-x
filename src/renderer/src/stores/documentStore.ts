@@ -2,6 +2,9 @@ import { create } from "zustand"
 
 interface DocumentState {
   file: File | null
+
+  displayFile: boolean
+  setDisplayFile: (b: boolean) => void
   
   resultBlob: Blob | null
   error: string | null
@@ -14,6 +17,10 @@ interface DocumentState {
 
 export const useDocumentStore = create<DocumentState>((set) => ({
   file: null,
+  displayFile: false,
+  setDisplayFile(b) {
+      set({ displayFile: b })
+  },
   resultBlob: null,
   error: null,
   setFile(file) {

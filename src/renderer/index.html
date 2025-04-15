@@ -4,20 +4,20 @@
     <meta charset="UTF-8" />
     <title>Electron</title>
 
-    <!-- Google Fonts: Quicksand -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- CSP: Content-Security-Policy -->
     <meta
       http-equiv="Content-Security-Policy"
       content="
-        default-src 'self';
+        default-src 'self' blob:;
         script-src 'self';
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-        font-src 'self' https://fonts.g static.com;
+        font-src 'self' https://fonts.gstatic.com;
         img-src 'self' data:;
-        connect-src 'self' https://uxdrmhptzpaiskqrnlwe.supabase.co wss://uxdrmhptzpaiskqrnlwe.supabase.co;"
+        connect-src 'self' https://uxdrmhptzpaiskqrnlwe.supabase.co wss://uxdrmhptzpaiskqrnlwe.supabase.co;
+        object-src 'self' blob:;"
     />
+
 
   </head>
 

@@ -13,6 +13,7 @@ import { LanguageSelector } from "./components/LanguageSelector";
 import logo from "./assets/logo3.png"
 import Header from "./components/Header";
 import { sbclient } from "./supabase-client";
+import DisplayDocumentDialog from "./components/dialogs/DisplayDocumentDialog";
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -63,12 +64,13 @@ function App(): JSX.Element {
   
   return (
     <div className='w-full'>
+      <DisplayDocumentDialog />
       <Header />
       <Router>
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/profile" element={<Profile />} />
-          <Route path="/processed-document" element={<ProcessedDocument />} />
+          <Route path="/processed-document" element={ <ProcessedDocument />} />
         </Routes>
       </Router>
     </div>

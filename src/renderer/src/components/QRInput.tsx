@@ -58,7 +58,7 @@ const QRInput = () => {
 
   if (userData) {
     return (
-      <Card className="w-80">
+      <Card className="w-80 h-96">
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center">
             <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
