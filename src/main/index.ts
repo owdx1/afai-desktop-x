@@ -74,8 +74,6 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  ipcMain.on('ping', () => console.log('pong'))
-
   ipcMain.handle('scan-document', async () => {
     try {
       // Path to the advanced_scanner_printer.py script

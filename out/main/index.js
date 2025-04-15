@@ -419,7 +419,6 @@ electron.app.whenReady().then(() => {
   electron.app.on("browser-window-created", (_, window) => {
     utils.optimizer.watchWindowShortcuts(window);
   });
-  electron.ipcMain.on("ping", () => console.log("pong"));
   electron.ipcMain.handle("scan-document", async () => {
     try {
       let scriptPath = "";

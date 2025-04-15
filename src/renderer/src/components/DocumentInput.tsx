@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useEffect } from 'react'
+import { ChangeEvent, useState, useEffect } from 'react'
 import { Input } from './ui/input'
 import { useDocumentStore } from '../stores/documentStore'
 import { CheckCircle, FileIcon, ScanIcon, ExternalLinkIcon } from 'lucide-react'
@@ -13,11 +13,9 @@ import {
   DialogFooter,
   DialogClose
 } from './ui/dialog'
-import path from 'path'
 
-type Props = {}
+const DocumentInput = () => {
 
-const DocumentInput = (props: Props) => {
   const { file, setFile, error, setError } = useDocumentStore()
   const [isScanning, setIsScanning] = useState(false)
   const [showScanPopup, setShowScanPopup] = useState(false)
@@ -53,15 +51,6 @@ const DocumentInput = (props: Props) => {
     loadFileDataUrl();
   }, [scanFilePath]);
 
-  // Clear success message after 3 seconds
-  useEffect(() => {
-    if (successMessage) {
-      const timer = setTimeout(() => {
-        setSuccessMessage('');
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [successMessage]);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files ? e.target.files[0] : null
@@ -81,6 +70,7 @@ const DocumentInput = (props: Props) => {
   }
 
   const handleScanFile = async () => {
+
     try {
       setIsScanning(true)
       setError(null)

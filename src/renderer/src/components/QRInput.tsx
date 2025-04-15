@@ -8,8 +8,10 @@ import { sbclient } from "../supabase-client";
 import { UserData } from "../lib/db-types";
 
 const QRInput = () => {
+
   const { user } = useAuthStore();
   const { client_id, setClientId, userData, setUserData } = useClientStore();
+  
   const [qrUrl, setQrUrl] = useState("");
 
   useEffect(() => {
@@ -30,7 +32,7 @@ const QRInput = () => {
       table: 'Request',
       filter: `afai_id=eq.${user.id}`
     }, async (payload) => {
-      console.log("Received payload");
+      console.log("Received payload", payload);
       if(payload.new && payload.new.client_id) {
         const clientId = payload.new.client_id
         setClientId(clientId)
