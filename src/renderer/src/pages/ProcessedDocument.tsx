@@ -183,6 +183,23 @@ const ProcessedDocument = () => {
             <FolderOpenIcon className="mr-2 h-4 w-4" />
             Open Folder
           </Button>
+          <Button 
+            className="w-64 flex items-center justify-center gap-2"
+            onClick={printPdfFile}
+            disabled={isPrinting || !filePath}
+          >
+            {isPrinting ? (
+              <>
+                <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Printing...
+              </>
+            ) : (
+              <>
+                <PrinterIcon className="h-5 w-5" />
+                Print the File
+              </>
+            )}
+          </Button>
         </div>
       </div>
 
